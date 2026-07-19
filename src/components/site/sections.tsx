@@ -28,8 +28,12 @@ export function Hero() {
         />
       </div>
 
-      {/* Lets the headline sit on the image without a box behind it. */}
-      <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent lg:to-40%" />
+      {/* Lets the headline sit on the image without a box behind it.
+          The scrim runs bottom-to-top on phones and left-to-right from `lg`:
+          the portrait fills the whole width on mobile, so a horizontal scrim
+          would bury it behind the copy — the one thing 11-wireframe-home.md
+          says must never happen. Vertical keeps the face clear above the text. */}
+      <div className="absolute inset-0 bg-linear-to-t from-background via-background/80 to-transparent lg:bg-linear-to-r lg:to-40%" />
 
       {/* Concrete wall behind the headline column. It sits ABOVE the gradient —
           below it, the opaque left edge of the gradient hides it completely.
@@ -104,7 +108,10 @@ export function PracticeGrid({ withCta = false }: { withCta?: boolean }) {
               src={`/images/area-${area.slug}.avif`}
               alt=""
               brief={area.title}
-              className="absolute inset-0 opacity-30 transition-opacity duration-500 group-hover:opacity-60"
+              // A touch screen never fires group-hover, so on phones these
+              // eight cards would stay flat forever. Give them the reveal up
+              // front where hovering is impossible — "all eight or none".
+              className="absolute inset-0 opacity-30 transition-opacity duration-500 group-hover:opacity-60 [@media(hover:none)]:opacity-50"
             />
             <span className="relative label leading-[1.5]">{area.title}</span>
           </Link>

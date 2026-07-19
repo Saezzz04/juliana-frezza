@@ -76,8 +76,10 @@ export function SiteHeader() {
         </nav>
 
         <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
+          {/* Negative margin cancels the padding, so the hit area grows to a
+              thumb-sized target without shifting the wordmark's baseline. */}
           <SheetTrigger
-            className="label link-underline md:hidden"
+            className="label link-underline -m-3 p-3 md:hidden"
             aria-label="Open menu"
           >
             Menu
