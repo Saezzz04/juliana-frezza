@@ -21,7 +21,11 @@ jobs:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile
-      - run: bun run build
+      # TEMPORARY: the 3 portraits of Juliana are still AI comps, and
+      # check-assets.mjs fails the build while any remain. Deploying with them
+      # anyway was a deliberate call — drop this env var the moment the real
+      # photos land, so the gate goes back to doing its job.
+      - run: ALLOW_PLACEHOLDERS=1 bun run build
       # SPA fallback: GitHub Pages serves 404.html for unknown paths,
       # BrowserRouter takes it from there.
       - run: cp dist/index.html dist/404.html
