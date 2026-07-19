@@ -97,14 +97,19 @@ export function Figure({
   className?: string
 }) {
   if (src) {
+    // Callers write root-absolute paths ("/images/x.avif"). Vite only rewrites
+    // asset URLs it processes at build time, never runtime strings, so under a
+    // subpath deploy those resolve against the domain root and 404. Re-anchor
+    // them on BASE_URL, which is "/" in dev and "/juliana-frezza/" in prod.
+    const url = src.replace(/^\//, import.meta.env.BASE_URL)
     return (
       <div className={cn("relative size-full", className)}>
         {/* ponytail: the .webp twin always sits next to the .avif — same name,
             same folder. Not worth a prop. */}
         <picture className="block size-full">
-          <source srcSet={src} type="image/avif" />
+          <source srcSet={url} type="image/avif" />
           <img
-            src={src.replace(/\.avif$/, ".webp")}
+            src={url.replace(/\.avif$/, ".webp")}
             alt={alt ?? ""}
             className="size-full object-cover"
           />
