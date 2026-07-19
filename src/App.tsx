@@ -1,20 +1,46 @@
-import { Button } from "@/components/ui/button"
+import { useEffect } from "react"
+import { Route, Routes, useLocation } from "react-router"
+
+import { SiteFooter } from "@/components/site/site-footer"
+import { SiteHeader } from "@/components/site/site-header"
+import { About } from "@/pages/about"
+import { Contact } from "@/pages/contact"
+import { Experience } from "@/pages/experience"
+import { Home } from "@/pages/home"
+import { PracticeAreaDetail, PracticeAreas } from "@/pages/practice-areas"
+
+function ScrollToTop() {
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+
+  return null
+}
 
 export function App() {
   return (
-    <div className="flex min-h-svh p-6">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        <div>
-          <h1 className="font-medium">Project ready!</h1>
-          <p>You may now add components and start building.</p>
-          <p>We&apos;ve already added the button component for you.</p>
-          <Button className="mt-2">Button</Button>
-        </div>
-        <div className="font-mono text-xs text-muted-foreground">
-          (Press <kbd>d</kbd> to toggle dark mode)
-        </div>
-      </div>
-    </div>
+    <>
+      <ScrollToTop />
+      <SiteHeader />
+
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/practice-areas" element={<PracticeAreas />} />
+          <Route
+            path="/practice-areas/:slug"
+            element={<PracticeAreaDetail />}
+          />
+          <Route path="/experience" element={<Experience />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+      </main>
+
+      <SiteFooter />
+    </>
   )
 }
 

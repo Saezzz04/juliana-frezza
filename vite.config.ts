@@ -5,6 +5,8 @@ import { defineConfig } from "vite"
 
 // https://vite.dev/config/
 export default defineConfig({
+  // Served from https://saezzz04.github.io/juliana-frezza/
+  base: "/juliana-frezza/",
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
